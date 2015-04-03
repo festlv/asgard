@@ -38,13 +38,15 @@ REGISTRATION_OPEN = False
 # Application definition
 
 INSTALLED_APPS = (
+    'django.contrib.contenttypes',
+
     'admin_tools',
     'admin_tools.theming',
     'admin_tools.menu',
     'admin_tools.dashboard',
+
     'django.contrib.admin',
     'django.contrib.auth',
-    'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -115,4 +117,10 @@ STATICFILES_DIRS = (
 
 ADMIN_TOOLS_MENU = 'asgard.menu.CustomMenu'
 
+GRAPH_MODELS = {
+    'all_applications': True,
+    'group_models': True,
+    'exclude_models': 'TimestampModel,Bookmark,DashboardPreferences,Session,ContentType,LogEntry'
+
+}
 from local_settings import *
