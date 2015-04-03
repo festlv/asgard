@@ -28,15 +28,31 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+AUTHENTICATION_BACKENDS = (
+    'userprofile.auth.EmailAuthBackend',
+    'django.contrib.auth.backends.ModelBackend'
+)
+
+REGISTRATION_OPEN = False
+
 # Application definition
 
 INSTALLED_APPS = (
+    'admin_tools',
+    'admin_tools.theming',
+    'admin_tools.menu',
+    'admin_tools.dashboard',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # 3rd party apps
+    'django_extensions',
+
+    # custom apps
     'userprofile',
     'access',
 )
@@ -57,7 +73,7 @@ ROOT_URLCONF = 'asgard.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -71,8 +87,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'asgard.wsgi.application'
-
-
 
 
 # Internationalization
@@ -92,6 +106,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static-collected/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static-collected')
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+
+ADMIN_TOOLS_MENU = 'asgard.menu.CustomMenu'
 
 from local_settings import *

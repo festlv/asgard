@@ -11,7 +11,10 @@ class Card(TimestampModel):
     pin_code = models.IntegerField()
 
     def __unicode__(self):
-        return hex(self.serial_number)
+        return "%X" % self.serial_number
+
+    class Meta:
+        unique_together = ['serial_number', 'is_deleted']
 
 
 class Zone(TimestampModel):
@@ -30,6 +33,13 @@ class ZoneUsage(TimestampModel):
         return "%s accessed %s" % (self.card, self.zone)
 
 
+class ZoneAccessLog(TimestampModel):
+    serial_number = models.BigIntegerField()
+    zone = models.ForeignKey(Zone)
+    pin_code = models.IntegerField()
+    access_granted = models.BooleanField()
+
+
 class Tool(TimestampModel):
     """This model corresponds to restricted-access tool (e.g. lasercutter)"""
     title = models.CharField(max_length=50)
@@ -44,4 +54,4 @@ class ToolUsage(TimestampModel):
     tool = models.ForeignKey(Tool)
     usage_start = models.DateTimeField()
     # may not be applicable to all tools
-    usage_end = models.DateTimeField(blank=True)
+    usage_end = models.DateTimeField(blank=True, null=True)

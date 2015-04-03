@@ -1,0 +1,63 @@
+{% extends "admin/index.html" %}
+{% load i18n %}
+
+{% block extrahead %} 
+{{block.super}}
+<style>
+    form label {
+        display: block;
+        width: 150px;
+        font-weight: bold;
+    }
+    #content-main {
+        width: 60%;
+    }
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div id="content-main">
+    <form action="{{ action }}" method="POST">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+        <ul>
+            {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% for field in form %}
+        <div id="{{ field.auto_id }}_container" class="field-row">
+            {{ field.help_text }}
+            <div>
+                {{ field.label_tag }} {{ field }}
+            </div>
+            <div id="{{ field.auto_id }}_errors">
+                {{ field.errors }}
+            </div>
+        </div>
+        {% endfor %}
+
+        <input id="save_contact" type="submit" value="Save" />
+    </form>
+
+
+</div>
+
+{% endblock %}
+
+
+{% block sidebar %}
+        <h2>Last failed access attempts</h2>
+
+        <table>
+            <tr><th>Time</th><th>Card ID</th></tr>
+
+            {% for o in last_failed_access_attempts %}
+            <tr><td>{{o.created_datetime}}</td><td>{{o.serial_number|stringformat:"X"}}</td></tr>
+            {% endfor %}
+        </table>
+{% endblock %}

@@ -10,11 +10,15 @@ class UserProfile(TimestampModel):
     """
 
     user = models.OneToOneField(User)
-    phone_number = models.TextField(max_length=20)
+    phone_number = models.CharField(max_length=20)
     access_zones = models.ManyToManyField(
         Zone, db_table="userprofile_zone_access")
     access_tools = models.ManyToManyField(
         Tool, db_table="userprofile_tool_access")
 
+    def __unicode__(self):
+        return "Userprofile for %s" % self.user
+
     class Meta:
         db_table = "userprofile"
+        unique_together = ['user', 'is_deleted']

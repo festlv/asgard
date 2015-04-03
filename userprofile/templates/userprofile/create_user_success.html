@@ -1,0 +1,36 @@
+{% extends "admin/index.html" %}
+{% load i18n %}
+
+{% block extrahead %} 
+{{block.super}}
+<style>
+    label {
+        display: block;
+        width: 150px;
+        font-weight: bold;
+    }
+    #content-main {
+        width: 60%;
+    }
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div id="content-main">
+    <h2>User created</h2>
+    <label>E-mail:</label> {{u.email}}<br/>
+
+    <label>Password:</label> {{password}}<br/>
+
+    <label>Pin code:</label> {{pin_code}}<br/>
+
+</div>
+
+{% endblock %}
+
+
+{% block sidebar %}
+{% endblock %}
