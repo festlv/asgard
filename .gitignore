@@ -1,3 +1,4 @@
 asgard/local_settings.py
 .ropeproject
 *.pyc
+.venv

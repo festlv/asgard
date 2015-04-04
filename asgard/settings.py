@@ -8,6 +8,7 @@ https://docs.djangoproject.com/en/1.8/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
+
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -57,6 +58,8 @@ INSTALLED_APPS = (
     # custom apps
     'userprofile',
     'access',
+
+    'debug_toolbar',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -120,7 +123,10 @@ ADMIN_TOOLS_MENU = 'asgard.menu.CustomMenu'
 GRAPH_MODELS = {
     'all_applications': True,
     'group_models': True,
-    'exclude_models': 'TimestampModel,Bookmark,DashboardPreferences,Session,ContentType,LogEntry'
-
+    'exclude_models': ('TimestampModel,Bookmark,DashboardPreferences,'
+                       'Session,ContentType,LogEntry')
 }
-from local_settings import *
+
+INTERNAL_IPS = ('172.16.42.1', '127.0.0.1')
+
+from asgard.local_settings import *
