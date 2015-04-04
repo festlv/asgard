@@ -25,6 +25,19 @@ class Zone(TimestampModel):
         return self.title
 
 
+class ZoneAccess(TimestampModel):
+    """
+    This model stores user <> zone relation, which allows users
+    access to certain zones
+    """
+    user = models.ForeignKey(User, related_name="zone_access_set")
+    zone = models.ForeignKey(Zone)
+
+    class Meta:
+        unique_together = ['user', 'zone']
+        verbose_name_plural = 'zone accesses'
+
+
 class ZoneUsage(TimestampModel):
     card = models.ForeignKey(Card)
     zone = models.ForeignKey(Zone)
@@ -46,6 +59,19 @@ class Tool(TimestampModel):
 
     def __unicode__(self):
         return self.title
+
+
+class ToolAccess(TimestampModel):
+    """
+    This model stores user <> tool relation, which allows users
+    access to certain tools
+    """
+    user = models.ForeignKey(User, related_name='tool_access_set')
+    tool = models.ForeignKey(Tool)
+
+    class Meta:
+        unique_together = ['user', 'tool']
+        verbose_name_plural = 'tool accesses'
 
 
 class ToolUsage(TimestampModel):

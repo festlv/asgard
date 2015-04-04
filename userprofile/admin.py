@@ -73,10 +73,10 @@ def create_user(request):
                 user=u, phone_number=form.cleaned_data['phone_number'])
 
             for z in form.cleaned_data['zone_access']:
-                up.access_zones.add(z)
+                u.zone_access_set.create(zone=z)
 
             for t in form.cleaned_data['tool_access']:
-                up.access_tools.add(t)
+                u.tool_access_set.create(tool=t)
 
             card = Card.objects.create(
                 user=u, pin_code=pin_code,

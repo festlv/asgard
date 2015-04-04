@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from access.models import Zone, Tool
 from asgard.base_models import TimestampModel
 
 
@@ -11,10 +10,6 @@ class UserProfile(TimestampModel):
 
     user = models.OneToOneField(User)
     phone_number = models.CharField(max_length=20)
-    access_zones = models.ManyToManyField(
-        Zone, db_table="userprofile_zone_access")
-    access_tools = models.ManyToManyField(
-        Tool, db_table="userprofile_tool_access")
 
     def __unicode__(self):
         return "Userprofile for %s" % self.user

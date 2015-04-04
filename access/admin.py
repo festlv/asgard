@@ -1,5 +1,6 @@
 from django.contrib import admin
-from access.models import Card, Zone, ZoneUsage, Tool, ToolUsage, ZoneAccessLog
+from .models import Card, Zone, ZoneUsage, Tool, ToolUsage, \
+    ZoneAccessLog, ToolAccess, ZoneAccess
 from .forms import CardForm
 
 
@@ -21,6 +22,11 @@ admin.site.register(Card, CardAdmin)
 class ZoneAdmin(TimestampAdmin):
     pass
 admin.site.register(Zone, ZoneAdmin)
+
+
+class ZoneAccessAdmin(TimestampAdmin):
+    list_display = ['user', 'zone', 'created_datetime', 'is_active']
+admin.site.register(ZoneAccess, ZoneAccessAdmin)
 
 
 class ZoneAccessLogAdmin(TimestampAdmin):
@@ -66,5 +72,12 @@ class ToolUsageAdmin(TimestampAdmin):
         return 'ongoing'
 
     usage_length_display.short_description = 'Duration'
+
+
+class ToolAccessAdmin(TimestampAdmin):
+    list_display = ('user', 'tool', 'created_datetime', 'is_active')
+    list_filter = ('tool', 'is_active', 'is_deleted')
+admin.site.register(ToolAccess, ToolAccessAdmin)
+
 
 admin.site.register(ToolUsage, ToolUsageAdmin)
