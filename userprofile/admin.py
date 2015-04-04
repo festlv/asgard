@@ -4,19 +4,38 @@ from django.contrib import admin
 from django.db import transaction
 from django.shortcuts import render
 from django.contrib.auth.models import User
+from django.contrib.auth.admin import UserAdmin
 
 from userprofile.models import UserProfile
 from userprofile.forms import CreateUserForm
 from access.models import ZoneAccessLog, Card
 
-class UserProfileAdmin(admin.ModelAdmin):
+
+class ProfileInline(admin.StackedInline):
+    model = UserProfile
+    can_delete = False
+    verbose_name_plural = 'profile'
     readonly_fields = ['created_datetime', 'modified_datetime']
+
+
+class UserProfileAdmin(UserAdmin):
+    inlines = [ProfileInline, ]
+    list_display = ['username', 'level_display',
+                    'is_active', 'is_staff']
+
+    def level_display(self, obj):
+        if obj.user_profile:
+            return obj.user_profile.level
+        else:
+            return "(None)"
+    level_display.short_description = "Level"
 
     # disables deletion form database
     def has_delete_permission(self, request, obj=None):
         return False
 
-admin.site.register(UserProfile, UserProfileAdmin)
+admin.site.unregister(User)
+admin.site.register(User, UserProfileAdmin)
 
 
 def get_username(email):
@@ -70,7 +89,8 @@ def create_user(request):
                 last_name=form.cleaned_data['last_name'])
 
             up = UserProfile.objects.create(
-                user=u, phone_number=form.cleaned_data['phone_number'])
+                user=u, phone_number=form.cleaned_data['phone_number'],
+                level=form.cleaned_data['level'])
 
             for z in form.cleaned_data['zone_access']:
                 u.zone_access_set.create(zone=z)

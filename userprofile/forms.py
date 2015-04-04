@@ -3,7 +3,7 @@ from asgard.forms import BootstrapForm
 
 from access.forms import HexNumberInput
 
-from access.models import Zone, Tool, Card
+from access.models import Zone, Tool, Card, UserLevel
 from django.contrib.auth.models import User
 
 
@@ -12,9 +12,9 @@ class CreateUserForm(forms.Form):
     last_name = forms.CharField(min_length=2)
     email = forms.EmailField()
     phone_number = forms.CharField(min_length=7)
-
     card_serial_number = forms.CharField(widget=HexNumberInput())
 
+    level = forms.ModelChoiceField(UserLevel.objects.all())
     zone_access = forms.ModelMultipleChoiceField(
         Zone.objects.all(), required=False)
     tool_access = forms.ModelMultipleChoiceField(

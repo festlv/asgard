@@ -107,6 +107,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+CURRENCY_FORMAT = "EUR %.2f"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/

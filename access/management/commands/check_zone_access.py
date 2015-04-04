@@ -41,9 +41,9 @@ class Command(BaseCommand):
             raise CommandError("Card does not exist or wrong pin code.")
 
         # check if user has access to this zone
-        if len(card.user.zone_access_set.filter(
-            zone=zone, is_active=True, is_deleted=False)) > 0:
-                access_log.access_granted=True
+        if len(card.user.zone_access_set.filter(zone=zone)) > 0 and \
+           card.user.is_active:
+                access_log.access_granted = True
                 access_log.save()
                 ZoneUsage.objects.create(card=card, zone=zone)
                 self.stdout.write("Access granted.")

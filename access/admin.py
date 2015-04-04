@@ -1,6 +1,10 @@
 from django.contrib import admin
+
+from asgard.utils import format_currency
+
 from .models import Card, Zone, ZoneUsage, Tool, ToolUsage, \
-    ZoneAccessLog, ToolAccess, ZoneAccess
+    ZoneAccessLog, ToolAccess, ZoneAccess, UserLevel, \
+    UserLevelToolPrice
 from .forms import CardForm
 
 
@@ -25,7 +29,7 @@ admin.site.register(Zone, ZoneAdmin)
 
 
 class ZoneAccessAdmin(TimestampAdmin):
-    list_display = ['user', 'zone', 'created_datetime', 'is_active']
+    list_display = ['user', 'zone', 'created_datetime']
 admin.site.register(ZoneAccess, ZoneAccessAdmin)
 
 
@@ -57,11 +61,17 @@ admin.site.register(Tool, ToolAdmin)
 
 class ToolUsageAdmin(TimestampAdmin):
     list_display = ['tool', 'card', 'card_user_display',
-                    'usage_length_display']
+                    'usage_length_display', 'cost_display']
+
+    readonly_fields = ['cost', 'created_datetime', 'modified_datetime']
 
     def card_user_display(self, obj):
         return obj.card.user
     card_user_display.short_description = "User"
+
+    def cost_display(self, obj):
+        return format_currency(obj.cost)
+    cost_display.short_description = "Cost"
 
     def usage_length_display(self, obj):
         if obj.usage_end:
@@ -73,11 +83,22 @@ class ToolUsageAdmin(TimestampAdmin):
 
     usage_length_display.short_description = 'Duration'
 
+admin.site.register(ToolUsage, ToolUsageAdmin)
+
 
 class ToolAccessAdmin(TimestampAdmin):
-    list_display = ('user', 'tool', 'created_datetime', 'is_active')
-    list_filter = ('tool', 'is_active', 'is_deleted')
+    list_display = ('user', 'tool', 'created_datetime')
+
 admin.site.register(ToolAccess, ToolAccessAdmin)
 
 
-admin.site.register(ToolUsage, ToolUsageAdmin)
+class UserLevelAdmin(TimestampAdmin):
+    list_display = ('title', 'is_active', 'is_deleted')
+
+admin.site.register(UserLevel, UserLevelAdmin)
+
+
+class UserLevelTPAdmin(TimestampAdmin):
+    list_display = ('tool', 'user_level', 'price')
+
+admin.site.register(UserLevelToolPrice, UserLevelTPAdmin)

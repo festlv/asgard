@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from asgard.base_models import TimestampModel
+from access.models import UserLevel
 
 
 class UserProfile(TimestampModel):
@@ -8,7 +9,8 @@ class UserProfile(TimestampModel):
     see: https://docs.djangoproject.com/en/1.8/topics/auth/customizing/#extending-the-existing-user-model
     """
 
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, related_name='user_profile')
+    level = models.ForeignKey(UserLevel)
     phone_number = models.CharField(max_length=20)
 
     def __unicode__(self):
@@ -16,4 +18,3 @@ class UserProfile(TimestampModel):
 
     class Meta:
         db_table = "userprofile"
-        unique_together = ['user', 'is_deleted']
