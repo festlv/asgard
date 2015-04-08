@@ -5,7 +5,15 @@
 
     <div class="container-fluid">
         <div class="col-md-8">
-            <h3>{% trans "Tool usage costs due this month" %}</h3>
+            <h3>
+                {% if not next_month %} 
+                    {% trans "Tool usage costs due this month" %} 
+                {% else %}
+                    {% trans "Tool usage costs for" %}
+                    {{period_start|date:"SHORT_DATE_FORMAT"}} - 
+                    {{period_end|date:"SHORT_DATE_FORMAT"}}
+                {% endif %}
+            </h3>
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -18,7 +26,13 @@
 
                     <tr>
                         <td>{{u.pk}}</td>
-                        <td>{{u.usage_end | date:"SHORT_DATETIME_FORMAT"}}</td>
+                        <td>{% if u.usage_end %}
+                                {{u.usage_end | date:"SHORT_DATETIME_FORMAT"}}
+                            {% else %}
+                                {% trans "Ongoing" %}
+                            {% endif %}
+                        </td>
+
                         <td>{{u.tool.title}}</td>
                         <td>{{u.cost | format_currency}}</td>
                     </tr>
@@ -26,10 +40,21 @@
                     <tr>
                         <td colspan="3" class="text-right">
                             <strong>{% trans "Total:" %}</strong></td>
-                        <td>{{tool_usage_total.cost__sum | format_currency}}</td>
+                        <td><strong>{{tool_usage_total.cost__sum | format_currency}}</strong></td>
 
             </table>
-        
+            <div class="text-center">
+            <ul class="pagination">
+                <li><a href="?month={{previous_month|date:"Y-m"}}">
+                        &laquo; {% trans "Previous month" %}</a>
+                </li>
+                {% if next_month %} 
+                    <li><a href="?month={{next_month|date:"Y-m"}}">
+                        {% trans "Next month" %} &raquo;</a>
+                    </li>
+                {% endif %}
+            </div>
+
         </div>
         <div class="col-md-4">
             <h3>{% trans "Last visits" %}</h3>
