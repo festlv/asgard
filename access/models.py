@@ -4,6 +4,9 @@ from django.db import models
 from django.contrib.auth.models import User
 
 from asgard.base_models import SoftDeleteModel, TimestampModel
+from asgard.utils import format_currency
+
+from access.managers import ZoneUsageManager, ToolUsageManager
 
 
 class Card(SoftDeleteModel):
@@ -36,6 +39,7 @@ class ZoneAccess(TimestampModel):
     user = models.ForeignKey(User, related_name="zone_access_set")
     zone = models.ForeignKey(Zone)
 
+
     class Meta:
         unique_together = ['user', 'zone']
         verbose_name_plural = 'zone accesses'
@@ -44,6 +48,9 @@ class ZoneAccess(TimestampModel):
 class ZoneUsage(TimestampModel):
     card = models.ForeignKey(Card)
     zone = models.ForeignKey(Zone)
+
+
+    objects = ZoneUsageManager()
 
     def __unicode__(self):
         return "%s accessed %s" % (self.card, self.zone)
@@ -87,8 +94,10 @@ class ToolUsage(TimestampModel):
 
     cost = models.DecimalField(max_digits=10, decimal_places=2, blank=True,
                                help_text="This field is filled-in \
-                                automatically upon save",
-                               null=True)
+                                automatically upon save", null=True)
+
+    objects = ToolUsageManager()
+
 
     def save(self, *args, **kwargs):
         """
