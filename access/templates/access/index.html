@@ -10,8 +10,7 @@
                     {% trans "Tool usage costs due this month" %} 
                 {% else %}
                     {% trans "Tool usage costs for" %}
-                    {{period_start|date:"SHORT_DATE_FORMAT"}} - 
-                    {{period_end|date:"SHORT_DATE_FORMAT"}}
+                    {{period_start|date:"M Y"}}
                 {% endif %}
             </h3>
             <table class="table table-striped">
