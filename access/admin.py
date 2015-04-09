@@ -15,6 +15,7 @@ class TimestampAdmin(admin.ModelAdmin):
 class CardAdmin(TimestampAdmin):
     form = CardForm
     list_display = ['user', 'serial_number_display', 'is_active', 'is_deleted']
+    readonly_fields = ['user', 'created_datetime', 'modified_datetime']
 
     def serial_number_display(self, obj):
         return "%X" % obj.serial_number

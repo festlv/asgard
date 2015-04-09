@@ -9,7 +9,7 @@ from django.contrib.auth.admin import UserAdmin
 from userprofile.models import UserProfile
 from userprofile.forms import CreateUserForm
 from access.models import ZoneAccessLog, Card, ZoneAccess, ToolAccess
-
+from access.forms import CardForm
 
 class ProfileInline(admin.StackedInline):
     model = UserProfile
@@ -30,8 +30,15 @@ class ToolInline(admin.TabularInline):
     extra = 1
 
 
+class CardInline(admin.TabularInline):
+    model = Card
+    form = CardForm
+    readonly_fields = ['created_datetime', 'modified_datetime']
+    extra = 1
+
+
 class UserProfileAdmin(UserAdmin):
-    inlines = [ProfileInline, ToolInline, ZoneInline ]
+    inlines = [ProfileInline, CardInline, ToolInline, ZoneInline ]
     list_display = ['username', 'level_display',
                     'is_active', 'is_staff']
 
