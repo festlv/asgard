@@ -1,12 +1,14 @@
 from decimal import Decimal
 
+from django.core.validators import MinValueValidator
+
 from django.db import models
 from django.contrib.auth.models import User
 
 from asgard.base_models import SoftDeleteModel, TimestampModel
-from asgard.utils import format_currency
 
-from access.managers import ZoneUsageManager, ToolUsageManager
+from access.managers import ZoneUsageManager, ToolUsageManager,\
+    BaseSoftDeleteManager
 
 
 class Card(SoftDeleteModel):
@@ -39,7 +41,6 @@ class ZoneAccess(TimestampModel):
     user = models.ForeignKey(User, related_name="zone_access_set")
     zone = models.ForeignKey(Zone)
 
-
     class Meta:
         unique_together = ['user', 'zone']
         verbose_name_plural = 'zone accesses'
@@ -48,7 +49,6 @@ class ZoneAccess(TimestampModel):
 class ZoneUsage(TimestampModel):
     card = models.ForeignKey(Card)
     zone = models.ForeignKey(Zone)
-
 
     objects = ZoneUsageManager()
 
@@ -66,6 +66,8 @@ class ZoneAccessLog(TimestampModel):
 class Tool(SoftDeleteModel):
     """This model corresponds to restricted-access tool (e.g. lasercutter)"""
     title = models.CharField(max_length=50)
+
+    objects = BaseSoftDeleteManager()
 
     def __unicode__(self):
         return self.title
@@ -88,9 +90,8 @@ class ToolUsage(TimestampModel):
     """This model stores which user has used which tool and how long."""
     card = models.ForeignKey(Card)
     tool = models.ForeignKey(Tool)
-    usage_start = models.DateTimeField()
-    # may not be applicable to all tools
-    usage_end = models.DateTimeField(blank=True, null=True)
+    session_length = models.IntegerField(validators=[MinValueValidator(0)],
+                                         default=0)
 
     cost = models.DecimalField(max_digits=10, decimal_places=2, blank=True,
                                help_text="This field is filled-in \
@@ -98,16 +99,14 @@ class ToolUsage(TimestampModel):
 
     objects = ToolUsageManager()
 
-
     def save(self, *args, **kwargs):
         """
         Calculates cost of this instance of tool usage from user's
         level and corresponding tool price entry.
         """
         self.cost = None
-        if self.usage_end:
-            td = self.usage_end - self.usage_start
-            hours = Decimal(td.total_seconds() / 3600.0)
+        if self.session_length:
+            hours = Decimal(self.session_length / 3600.0)
 
             # in theory, there might be a case where user's profile
             # does not exist

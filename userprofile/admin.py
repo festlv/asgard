@@ -11,6 +11,7 @@ from userprofile.forms import CreateUserForm
 from access.models import ZoneAccessLog, Card, ZoneAccess, ToolAccess
 from access.forms import CardForm
 
+
 class ProfileInline(admin.StackedInline):
     model = UserProfile
     can_delete = False

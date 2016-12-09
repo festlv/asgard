@@ -25,11 +25,8 @@
 
                     <tr>
                         <td>{{u.pk}}</td>
-                        <td>{% if u.usage_end %}
-                                {{u.usage_end | date:"SHORT_DATETIME_FORMAT"}}
-                            {% else %}
-                                {% trans "Ongoing" %}
-                            {% endif %}
+                        <td>
+                                {{u.modified_datetime | date:"SHORT_DATETIME_FORMAT"}}
                         </td>
 
                         <td>{{u.tool.title}}</td>

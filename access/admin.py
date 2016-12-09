@@ -1,6 +1,10 @@
 from django.contrib import admin
+from django.db import transaction
+from django.shortcuts import render, get_object_or_404
 
 from asgard.utils import format_currency
+
+from django.contrib.auth.models import User
 
 from .models import Card, Zone, ZoneUsage, Tool, ToolUsage, \
     ZoneAccessLog, ToolAccess, ZoneAccess, UserLevel, \
@@ -75,9 +79,8 @@ class ToolUsageAdmin(TimestampAdmin):
     cost_display.short_description = "Cost"
 
     def usage_length_display(self, obj):
-        if obj.usage_end:
-            td = obj.usage_end - obj.usage_start
-            hours, remainder = divmod(td.total_seconds(), 3600)
+        if obj.session_length:
+            hours, remainder = divmod(obj.session_length, 3600)
             minutes, seconds = divmod(remainder, 60)
             return '%d:%02d:%02d' % (hours, minutes, seconds)
         return 'ongoing'
@@ -103,3 +106,29 @@ class UserLevelTPAdmin(TimestampAdmin):
     list_display = ('tool', 'user_level', 'price')
 
 admin.site.register(UserLevelToolPrice, UserLevelTPAdmin)
+
+
+def user_tool_usage_report(requests, user_pk, date_from=None, date_to=None):
+    """
+    View tool usage by user.
+    """
+
+    user = get_object_or_404(User, pk=user_pk)
+
+
+
+def tool_usage_report(request, tool_pk, date_from=None, date_to=None):
+    """
+    View for tool usage reports, showing usage by tool.
+
+    Contains a filter for date range.
+    """
+    raise NotImplemented("This feature has not been implemented")
+
+    tools = Tool.objects.all_active()
+
+    # get a list of users and sum of their cost related
+    #for t in tools:
+    #    users = User.objects.filter(card_set
+
+    return render(request, 'access/admin/tool_usage_report.html', locals())

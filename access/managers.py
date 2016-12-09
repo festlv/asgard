@@ -18,9 +18,15 @@ class ToolUsageManager(models.Manager):
         Returns a tuple of QuerySet and total usage cost for this QuerySet.
         """
 
-        qs = self.filter(card__user=user, usage_end__year=date.year,
-                         usage_end__month=date.month)
+        qs = self.filter(card__user=user, modified_datetime__year=date.year,
+                         modified_datetime__month=date.month)
 
         total = qs.aggregate(models.Sum('cost'))
 
         return (qs, total)
+
+
+class BaseSoftDeleteManager(models.Manager):
+
+    def all_active(self):
+        return self.filter(is_deleted=False, is_active=True)

@@ -14,5 +14,6 @@ urlpatterns = [
 
     url(r'^admin_tools/', include('admin_tools.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include('access.admin_urls')),
     url(r'^admin/create_user/', 'userprofile.admin.create_user', name='admin_create_user'),
 ]
