@@ -1,0 +1,22 @@
+Sveiks {{ user.first_name }},
+MAKE Rīga pastāvēšana ir iespējama tikai pateicoties biedru ziedojumiem.
+
+
+Mēs aicinām Tevi ziedot {{ recommended_amount }}, lai MAKE Rīga durvis turpinātu palikt atvērtas!
+
+Ziedojumu iespējams veikt uz sekojošu norēķinu kontu, vai arī personīgi, ierodoties MAKE Rīga telpās.
+
+Nodibinājums "ATVĒRTĀ DARBNĪCA MAKE RĪGA"
+Reģ. Nr. 40008230679
+Konta Nr. LV20HABA0551039313660
+Banka: A/S Swedbank
+
+
+Ar cieņu,
+MAKE Rīga komanda
+
+<hr/>
+<p style="font-size:0.5em;">
+Lai atteiktos no šo atgādinājumu saņemšanas un izslēgtu sevi no MAKE Rīga biedru saraksta,
+lūdzu sazinies ar <a href="mailto:hello@makeriga.org">hello@makeriga.org</a>.
+</p>

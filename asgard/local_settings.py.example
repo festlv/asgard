@@ -3,11 +3,14 @@
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'database',
-        'USER': 'user',
-        'PASSWORD': 'password',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3,
+        'NAME': 'development.db',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
     }
 }
+
+DEFAULT_FROM_EMAIL = 'hello@makeriga.org'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

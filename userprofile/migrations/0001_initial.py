@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import datetime
 from django.conf import settings
 
 
@@ -17,10 +18,14 @@ class Migration(migrations.Migration):
             name='UserProfile',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('phone_number', models.TextField(max_length=20)),
-                ('access_tools', models.ManyToManyField(to='access.Tool')),
-                ('access_zones', models.ManyToManyField(to='access.Zone')),
-                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
+                ('created_datetime', models.DateTimeField(default=datetime.datetime.now, verbose_name='created datetime', blank=True)),
+                ('modified_datetime', models.DateTimeField(default=datetime.datetime.now, verbose_name='modified datetime', blank=True)),
+                ('phone_number', models.CharField(max_length=20)),
+                ('level', models.ForeignKey(to='access.UserLevel')),
+                ('user', models.OneToOneField(related_name='user_profile', to=settings.AUTH_USER_MODEL)),
             ],
+            options={
+                'db_table': 'userprofile',
+            },
         ),
     ]

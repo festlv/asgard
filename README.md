@@ -1,13 +1,13 @@
 Simple __CRM__ for a hackerspace/makerspace
 -----------------------------------------------
 
-Warning: work in progress.
+Warning: very much work in progress.
 
 Requires: python2
 
 Installation:
 
-    git clone ... asgard
+    git clone git@github.com:festlv/asgard.git asgard
     cd asgard/
     virtualenv-2.7 .env
     source .env/bin/activate
@@ -16,3 +16,4 @@ Installation:
     vim asgard/local_settings.py # change database
     ./manage.py migrate
     ./manage.py runserver
+

@@ -21,7 +21,7 @@ class CustomMenu(Menu):
         self.children += [
             items.MenuItem(_('Dashboard'), reverse('admin:index')),
             items.MenuItem(_('Create user'), reverse('admin_create_user')),
-            items.MenuItem(_('Tool report'), reverse('admin_tool_usage')),
+            # items.MenuItem(_('Tool report'), reverse('admin_tool_usage')),
             items.AppList(
                 _('Applications'),
                 exclude=('django.contrib.*',)

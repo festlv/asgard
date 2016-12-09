@@ -6,9 +6,9 @@ from django.db import migrations
 
 def create_levels(apps, schema_editor):
     UserLevel = apps.get_model("access", "UserLevel")
-    a = UserLevel.objects.create(title="Level A")
-    UserLevel.objects.create(title="Level B")
-    UserLevel.objects.create(title="Level C")
+    a = UserLevel.objects.create(title="Level A", recommended_donation=5)
+    UserLevel.objects.create(title="Level B", recommended_donation=20)
+    UserLevel.objects.create(title="Level C", recommended_donation=50)
 
     UserProfile = apps.get_model("userprofile", "UserProfile")
     for up in UserProfile.objects.all():
@@ -32,8 +32,8 @@ def remove_levels(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('userprofile', '0009_userprofile_level'),
-        ('access', '0007_auto_20150404_1806'),
+        ('userprofile', '0001_initial'),
+        ('access', '0001_initial'),
     ]
 
     operations = [

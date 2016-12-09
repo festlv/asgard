@@ -36,3 +36,9 @@ class SoftDeleteModel(TimestampModel):
 
     class Meta:
         abstract = True
+
+
+class BaseSoftDeleteManager(models.Manager):
+
+    def all_active(self):
+        return self.filter(is_deleted=False, is_active=True)

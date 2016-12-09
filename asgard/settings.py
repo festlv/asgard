@@ -58,6 +58,7 @@ INSTALLED_APPS = (
     # custom apps
     'userprofile',
     'access',
+    'donations',
 
     'debug_toolbar',
 )
@@ -129,5 +130,7 @@ GRAPH_MODELS = {
 }
 
 INTERNAL_IPS = ('172.16.42.1', '127.0.0.1')
+
+CURRENCIES = ('EUR', )
 
 from asgard.local_settings import *

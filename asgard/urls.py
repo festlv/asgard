@@ -6,7 +6,7 @@ urlpatterns = [
     # url(r'^$', 'asgard.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^$', 'access.views.index', name='index'),
+    url(r'^$', 'donations.views.index', name='index'),
 
     url(r'^accounts/', include('userprofile.urls')),
     url(r'^accounts/', include('registration.backends.simple.urls')),

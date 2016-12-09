@@ -116,8 +116,7 @@ def user_tool_usage_report(requests, user_pk, date_from=None, date_to=None):
     user = get_object_or_404(User, pk=user_pk)
 
 
-
-def tool_usage_report(request, tool_pk, date_from=None, date_to=None):
+def tool_usage_report(request, tool_pk=None, date_from=None, date_to=None):
     """
     View for tool usage reports, showing usage by tool.
 

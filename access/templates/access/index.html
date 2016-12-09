@@ -13,6 +13,7 @@
                     {{period_start|date:"M Y"}}
                 {% endif %}
             </h3>
+            {#
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -39,6 +40,8 @@
                         <td><strong>{{tool_usage_total.cost__sum | format_currency}}</strong></td>
 
             </table>
+            
+
             <div class="text-center">
             <ul class="pagination">
                 <li><a href="?month={{previous_month|date:"Y-m"}}">
@@ -50,7 +53,7 @@
                     </li>
                 {% endif %}
             </div>
-
+            #}
         </div>
         <div class="col-md-4">
             <h3>{% trans "Last visits" %}</h3>

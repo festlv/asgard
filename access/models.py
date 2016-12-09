@@ -5,10 +5,13 @@ from django.core.validators import MinValueValidator
 from django.db import models
 from django.contrib.auth.models import User
 
-from asgard.base_models import SoftDeleteModel, TimestampModel
+from django.conf import settings
+from djmoney.models.fields import MoneyField
 
-from access.managers import ZoneUsageManager, ToolUsageManager,\
+from asgard.base_models import SoftDeleteModel, TimestampModel, \
     BaseSoftDeleteManager
+
+from access.managers import ZoneUsageManager, ToolUsageManager
 
 
 class Card(SoftDeleteModel):
@@ -129,6 +132,9 @@ class UserLevel(SoftDeleteModel):
     of tools
     """
     title = models.CharField(max_length=50, unique=True)
+    recommended_donation = MoneyField(max_digits=10, decimal_places=2,
+                                      default_currency=settings.CURRENCIES[0],
+                                      blank=True)
 
     def __unicode__(self):
         return self.title
