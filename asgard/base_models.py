@@ -1,6 +1,6 @@
 from django.db import models
-from datetime import datetime
 from django.utils.translation import ugettext as _
+from django.utils import timezone
 
 
 class TimestampModel(models.Model):
@@ -10,14 +10,14 @@ class TimestampModel(models.Model):
         * modified_datetime
     """
     created_datetime = models.DateTimeField(
-        _('created datetime'), blank=True, default=datetime.now)
+        _('created datetime'), blank=True, default=timezone.now)
     modified_datetime = models.DateTimeField(
-        _('modified datetime'), blank=True, default=datetime.now)
+        _('modified datetime'), blank=True, default=timezone.now)
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            self.created_datetime = datetime.now()
-        self.modified_datetime = datetime.now()
+            self.created_datetime = timezone.now()
+        self.modified_datetime = timezone.now()
 
         super(TimestampModel, self).save(*args, **kwargs)
 
