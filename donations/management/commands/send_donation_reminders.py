@@ -18,6 +18,9 @@ class Command(BaseCommand):
         for user in users:
             # render e-mail template
             level = user.user_profile.level
+            # don't send reminders for some levels
+            if not level.send_donation_reminder:
+                continue
             recommended_amount = level.recommended_donation
             context = {
                 'user': user,

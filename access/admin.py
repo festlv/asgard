@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.db import transaction
 from django.shortcuts import render, get_object_or_404
 
 from asgard.utils import format_currency
@@ -97,7 +96,8 @@ admin.site.register(ToolAccess, ToolAccessAdmin)
 
 
 class UserLevelAdmin(TimestampAdmin):
-    list_display = ('title', 'is_active', 'is_deleted')
+    list_display = ('title', 'recommended_donation', 'send_donation_reminder',
+                    'is_active', 'is_deleted')
 
 admin.site.register(UserLevel, UserLevelAdmin)
 
@@ -112,7 +112,6 @@ def user_tool_usage_report(requests, user_pk, date_from=None, date_to=None):
     """
     View tool usage by user.
     """
-
     user = get_object_or_404(User, pk=user_pk)
 
 
@@ -127,7 +126,7 @@ def tool_usage_report(request, tool_pk=None, date_from=None, date_to=None):
     tools = Tool.objects.all_active()
 
     # get a list of users and sum of their cost related
-    #for t in tools:
+    # for t in tools:
     #    users = User.objects.filter(card_set
 
     return render(request, 'access/admin/tool_usage_report.html', locals())

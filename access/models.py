@@ -135,6 +135,7 @@ class UserLevel(SoftDeleteModel):
     recommended_donation = MoneyField(max_digits=10, decimal_places=2,
                                       default_currency=settings.CURRENCIES[0],
                                       blank=True)
+    send_donation_reminder = models.BooleanField(default=True, blank=True)
 
     def __unicode__(self):
         return self.title
