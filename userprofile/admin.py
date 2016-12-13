@@ -40,8 +40,8 @@ class CardInline(admin.TabularInline):
 
 class UserProfileAdmin(UserAdmin):
     inlines = [ProfileInline, CardInline, ToolInline, ZoneInline ]
-    list_display = ['username', 'level_display',
-                    'is_active', 'is_staff']
+    list_display = ['username', 'first_name', 'last_name', 'email',
+                    'level_display', 'is_active', 'is_staff']
 
     def level_display(self, obj):
         if obj.user_profile:
