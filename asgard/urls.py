@@ -1,4 +1,6 @@
 from django.conf.urls import include, url
+from django.views.generic import RedirectView
+from django.conf import settings
 from django.contrib import admin
 
 urlpatterns = [
@@ -13,6 +15,9 @@ urlpatterns = [
 
 
     url(r'^admin_tools/', include('admin_tools.urls')),
+    url(r'^admin/login/$', RedirectView.as_view(url=settings.LOGIN_URL,
+                                                permanent=True,
+                                                query_string=True)),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^admin/', include('access.admin_urls')),
     url(r'^admin/create_user/', 'userprofile.admin.create_user', name='admin_create_user'),
