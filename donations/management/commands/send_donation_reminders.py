@@ -21,6 +21,11 @@ class Command(BaseCommand):
             # don't send reminders for some levels
             if not level.send_donation_reminder:
                 continue
+
+            # check if there is already a registered donation from this user
+            if Donation.objects.user_donations_this_month(user).count() > 0:
+                continue
+
             recommended_amount = level.recommended_donation
             context = {
                 'user': user,

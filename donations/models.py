@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 
 from asgard.base_models import SoftDeleteModel, BaseSoftDeleteManager
 
+import datetime
+
 
 class DonationManager(BaseSoftDeleteManager):
     def user_donations(self, user):
@@ -14,6 +16,15 @@ class DonationManager(BaseSoftDeleteManager):
         return self.all_active().filter(
             user=user,
             payment_received=True).order_by("-payment_received_date")
+
+    def user_donations_this_month(self, user):
+        now = datetime.datetime.now()
+
+        return self.all_active().filter(
+            user=user,
+            created_datetime__year=now.year,
+            created_datetime__month=now.month)
+
 
 class Donation(SoftDeleteModel):
 
