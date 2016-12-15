@@ -61,6 +61,9 @@ INSTALLED_APPS = (
     'donations',
 
     'debug_toolbar',
+    'rest_framework',
+    'rest_framework.authtoken',
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -136,5 +139,7 @@ GRAPH_MODELS = {
 INTERNAL_IPS = ('172.16.42.1', '127.0.0.1')
 
 CURRENCIES = ('EUR', )
+
+from .rest_settings import *
 
 from asgard.local_settings import *

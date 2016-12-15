@@ -21,7 +21,13 @@ class Card(SoftDeleteModel):
     serial_number = models.BigIntegerField()
     pin_code = models.IntegerField()
 
+
+    objects = BaseSoftDeleteManager()
+
     def __unicode__(self):
+        return self.serial_number_hex()
+
+    def serial_number_hex(self):
         return "%X" % self.serial_number
 
     class Meta:
@@ -136,6 +142,7 @@ class UserLevel(SoftDeleteModel):
                                       default_currency=settings.CURRENCIES[0],
                                       )
     send_donation_reminder = models.BooleanField(default=True, blank=True)
+    can_open_doors = models.BooleanField(default=True, blank=True)
 
     def __unicode__(self):
         return self.title
