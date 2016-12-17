@@ -8,6 +8,14 @@ class ZoneUsageManager(models.Manager):
         return self.filter(card__user=user).order_by('-created_datetime')
 
 
+class ZoneAccessLogManager(models.Manager):
+
+    def filter_user(self, user):
+        """Return QuerySet filtered by user"""
+        return self.filter(card__user=user).order_by('-created_datetime')
+
+
+
 class ToolUsageManager(models.Manager):
 
     def filter_user_month(self, user, date):

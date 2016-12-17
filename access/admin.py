@@ -17,7 +17,7 @@ class TimestampAdmin(admin.ModelAdmin):
 
 class CardAdmin(TimestampAdmin):
     form = CardForm
-    list_display = ['user_first_name', 'user_last_name',
+    list_display = ['user_name',
                     'serial_number_display', 'is_active', 'is_deleted']
     readonly_fields = ['user', 'created_datetime', 'modified_datetime']
 
@@ -39,11 +39,14 @@ admin.site.register(ZoneAccess, ZoneAccessAdmin)
 
 
 class ZoneAccessLogAdmin(TimestampAdmin):
-    list_display = ['zone', 'serial_number_display', 'access_granted',
-                    'created_datetime']
+    list_display = ['user_name', 'serial_number_display', 'access_granted',
+                    'created_datetime', 'zone']
 
     def serial_number_display(self, obj):
-        return "%X" % obj.serial_number
+        if obj.card:
+            return "%X" % obj.card.serial_number
+        else:
+            return "%X" % obj.serial_number
     serial_number_display.short_description = "Serial number"
 
 admin.site.register(ZoneAccessLog, ZoneAccessLogAdmin)

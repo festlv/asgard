@@ -11,7 +11,8 @@ from djmoney.models.fields import MoneyField
 from asgard.base_models import SoftDeleteModel, TimestampModel, \
     BaseSoftDeleteManager
 
-from access.managers import ZoneUsageManager, ToolUsageManager
+from access.managers import ZoneUsageManager, ToolUsageManager, \
+    ZoneAccessLogManager
 
 
 class Card(SoftDeleteModel):
@@ -29,6 +30,9 @@ class Card(SoftDeleteModel):
 
     def serial_number_hex(self):
         return "%X" % self.serial_number
+
+    def user_name(self):
+        return self.user.get_full_name()
 
     def user_first_name(self):
         return self.user.first_name
@@ -77,6 +81,16 @@ class ZoneAccessLog(TimestampModel):
     zone = models.ForeignKey(Zone)
     pin_code = models.IntegerField()
     access_granted = models.BooleanField()
+
+    objects = ZoneAccessLogManager()
+
+    def user_name(self):
+        if self.card:
+            return self.card.user.get_full_name()
+        return u""
+
+    def __unicode__(self):
+        return "zone access log id %d" % self.pk
 
 
 class Tool(SoftDeleteModel):

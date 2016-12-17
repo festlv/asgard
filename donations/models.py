@@ -41,3 +41,9 @@ class Donation(SoftDeleteModel):
                                               related_name='donations_accepted')
 
     objects = DonationManager()
+
+    def __unicode__(self):
+        return "Donation id %d" % self.pk
+
+    def user_name(self):
+        return self.user.get_full_name()
