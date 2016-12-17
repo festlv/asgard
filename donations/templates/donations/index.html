@@ -35,14 +35,11 @@
         </div>
         <div class="col-md-4">
             <h3>{% trans "My last visits" %}</h3>
-            <p>{% trans "Access control system is not integrated yet!" %}
-            {% comment %}
             <ul class="list-unstyled">
-                {% for e in zone_usages %}
+                {% for e in zone_access %}
                     <li>{{e.created_datetime | date:"SHORT_DATETIME_FORMAT" }}</li>
                 {% endfor %}
             </ul>
-            {% endcomment %}
         </div>
     </div>
 {% endblock %}
