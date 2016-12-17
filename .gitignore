@@ -4,3 +4,4 @@ asgard/local_settings.py
 .venv
 *.db
 .env
+static-collected

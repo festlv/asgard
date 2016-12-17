@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load staticfiles i18n %}
+{% load staticfiles i18n humanize %}
 
 {% block body %}
 
@@ -35,11 +35,18 @@
         </div>
         <div class="col-md-4">
             <h3>{% trans "My last visits" %}</h3>
-            <ul class="list-unstyled">
-                {% for e in zone_access %}
-                    <li>{{e.created_datetime | date:"SHORT_DATETIME_FORMAT" }}</li>
-                {% endfor %}
-            </ul>
+			<ul>
+
+			{% for e in zone_access %}
+<li>
+				<div class="mtooltip">{{e.created_datetime | naturaltime}}
+					<span class="tooltiptext">
+					{{e.created_datetime | date:"SHORT_DATETIME_FORMAT" }}
+					</span>
+				</div>
+</li>
+			{% endfor %}
+</ul>
         </div>
     </div>
 {% endblock %}
