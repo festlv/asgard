@@ -26,6 +26,10 @@ class Command(BaseCommand):
             if Donation.objects.user_donations_this_month(user).count() > 0:
                 continue
 
+            # don't proceed if there is no e-mail for this user
+            if not user.email:
+                continue
+
             recommended_amount = level.recommended_donation
             context = {
                 'user': user,
