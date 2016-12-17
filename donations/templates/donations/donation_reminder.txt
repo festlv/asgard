@@ -15,8 +15,7 @@ Banka: A/S Swedbank
 Ar cieņu,
 MAKE Rīga komanda
 
-<hr/>
-<p style="font-size:0.5em;">
-Lai atteiktos no šo atgādinājumu saņemšanas un izslēgtu sevi no MAKE Rīga biedru saraksta,
-lūdzu sazinies ar <a href="mailto:hello@makeriga.org">hello@makeriga.org</a>.
-</p>
+-----------------------------------------------------------------------------------
+
+Lai atteiktos no šo atgādinājumu saņemšanas un izslēgtu sevi no 
+MAKE Rīga biedru saraksta, lūdzu sazinies ar hello@makeriga.org
