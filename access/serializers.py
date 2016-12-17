@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Card
+from .models import Card, ZoneAccessLog
 
 
 class CardSerializer(serializers.ModelSerializer):
@@ -16,7 +16,14 @@ class CardSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Card
-        fields = ('user', 'user_first_name', 'user_last_name',
+        fields = ('id', 'user', 'user_first_name', 'user_last_name',
                   'user_level', 'can_open_doors',
                   'serial_number',
                   'pin_code')
+
+
+class ZALSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ZoneAccessLog
+        fields = ('card', 'serial_number', 'zone',
+                  'pin_code', 'access_granted')

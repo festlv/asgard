@@ -30,6 +30,12 @@ class Card(SoftDeleteModel):
     def serial_number_hex(self):
         return "%X" % self.serial_number
 
+    def user_first_name(self):
+        return self.user.first_name
+
+    def user_last_name(self):
+        return self.user.last_name
+
     class Meta:
         unique_together = ['serial_number', 'is_deleted']
 
@@ -66,6 +72,7 @@ class ZoneUsage(TimestampModel):
 
 
 class ZoneAccessLog(TimestampModel):
+    card = models.ForeignKey(Card, blank=True, null=True)
     serial_number = models.BigIntegerField()
     zone = models.ForeignKey(Zone)
     pin_code = models.IntegerField()

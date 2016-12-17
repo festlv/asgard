@@ -8,6 +8,7 @@ from access import api_views
 
 api_router = routers.DefaultRouter()
 api_router.register(r'cards', api_views.CardViewSet)
+api_router.register(r'accesslogs', api_views.ZALViewSet)
 
 
 urlpatterns = [
@@ -30,6 +31,7 @@ urlpatterns = [
     url(r'^admin/', include('access.admin_urls')),
     url(r'^admin/create_user/', 'userprofile.admin.create_user',
         name='admin_create_user'),
+
     url(r'^api-auth/', include('rest_framework.urls',
                                namespace='rest_framework'))
 ]

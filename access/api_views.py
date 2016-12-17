@@ -1,6 +1,6 @@
-from .models import Card
+from .models import Card, ZoneAccessLog
 from rest_framework import viewsets
-from .serializers import CardSerializer
+from .serializers import CardSerializer, ZALSerializer
 
 
 class CardViewSet(viewsets.ModelViewSet):
@@ -9,3 +9,11 @@ class CardViewSet(viewsets.ModelViewSet):
     """
     queryset = Card.objects.all_active()
     serializer_class = CardSerializer
+
+
+class ZALViewSet(viewsets.ModelViewSet):
+    """
+    ZoneAccessLogs viewset
+    """
+    queryset = ZoneAccessLog.objects.none()
+    serializer_class = ZALSerializer
