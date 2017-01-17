@@ -40,7 +40,7 @@ admin.site.register(ZoneAccess, ZoneAccessAdmin)
 
 class ZoneAccessLogAdmin(TimestampAdmin):
     readonly_fields = ['card', 'serial_number', 'zone', 'pin_code',
-                       'access_granted', 'created_datetime']
+                       'access_granted', 'created_datetime', 'modified_datetime']
     list_display = ['user_name', 'serial_number_display', 'access_granted',
                     'created_datetime', 'zone']
     list_display_links = list_display
